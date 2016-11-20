@@ -10,5 +10,8 @@ tFax varchar(20) null,
 tCep varchar(10) not null,
 tCidade varchar(50) not null,
 tContato varchar(100) not null,
-temail varchar(200) null
-)
+tEmail varchar(200) null
+);
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Fabricantes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'tab004'
+GO

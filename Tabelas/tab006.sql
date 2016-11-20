@@ -15,4 +15,7 @@ CREATE TABLE tab006(
 	DataCadastro date not null,
 	nUsuario int not null,
 	iFoto image null
-)
+);
+
+EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Produtos' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'tab006'
+GO
