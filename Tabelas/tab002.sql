@@ -1,8 +1,16 @@
-create table tab002(
-nChave int identity(1,1) primary key,
-tDescricao varchar(50) not null,
-tSigla varchar(2) not null
-);
+ CREATE TABLE TAB002
+  (
+     IDUNIDADE  INT IDENTITY(1, 1),
+     TDESCRICAO VARCHAR(50) NOT NULL,
+     TSIGLA     VARCHAR(2) NOT NULL,
+	 
+     CONSTRAINT PKUNIDADES PRIMARY KEY (IDUNIDADE)
+  );
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Unidades' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'tab002'
-GO
+EXEC SYS.SP_ADDEXTENDEDPROPERTY
+  @NAME=N'MS_DESCRIPTION',
+  @VALUE=N'UNIDADES',
+  @LEVEL0TYPE=N'SCHEMA',
+  @LEVEL0NAME=N'DBO',
+  @LEVEL1TYPE=N'TABLE',
+  @LEVEL1NAME=N'TAB002'

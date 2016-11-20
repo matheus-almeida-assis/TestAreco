@@ -1,17 +1,27 @@
-create table tab004(
-nChave int identity(1,1) primary key,
-tDescricao varchar(100) not null,
-tLogradouro varchar(200) not null,
-nEstado int not null,
-tCNPJ varchar(20) not null,
-tIE varchar(20) not null,
-tTelefone varchar(20) not null,
-tFax varchar(20) null,
-tCep varchar(10) not null,
-tCidade varchar(50) not null,
-tContato varchar(100) not null,
-tEmail varchar(200) null
-);
+ CREATE TABLE TAB004
+  (
+     IDFORNECEDOR INT IDENTITY(1, 1),
+     TDESCRICAO   VARCHAR(100) NOT NULL,
+     TLOGRADOURO  VARCHAR(200) NOT NULL,
+     NESTADO      INT NOT NULL,
+     TCNPJ        VARCHAR(20) NOT NULL,
+     TIE          VARCHAR(20) NOT NULL,
+     TTELEFONE    VARCHAR(20) NOT NULL,
+     TFAX         VARCHAR(20) NULL,
+     TCEP         VARCHAR(10) NOT NULL,
+     TCIDADE      VARCHAR(50) NOT NULL,
+     TCONTATO     VARCHAR(100) NOT NULL,
+     TEMAIL       VARCHAR(200) NULL,
+	 
+     CONSTRAINT PKFORNECEDORES PRIMARY KEY (IDFORNECEDOR),
+     CONSTRAINT FKESTADOS_FORNECEDORES FOREIGN KEY (NESTADO) 
+	                            REFERENCES TAB003 (IDESTADO)
+  );
 
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Fabricantes' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'tab004'
-GO
+EXEC SYS.SP_ADDEXTENDEDPROPERTY
+  @NAME=N'MS_DESCRIPTION',
+  @VALUE=N'FORNECEDORES',
+  @LEVEL0TYPE=N'SCHEMA',
+  @LEVEL0NAME=N'DBO',
+  @LEVEL1TYPE=N'TABLE',
+  @LEVEL1NAME=N'TAB004'  

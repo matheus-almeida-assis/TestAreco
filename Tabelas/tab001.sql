@@ -1,13 +1,20 @@
+ CREATE TABLE TAB001
+  (
+     IDUSUARIO     INT IDENTITY(1, 1),
+     TNOMECOMPLETO VARCHAR(100) NOT NULL,
+     LATIVO        BIT NOT NULL,
+     DDATACADASTRO DATE NOT NULL,
+     TLOGIN        VARCHAR(50) NOT NULL,
+     TSENHA        VARCHAR(100) NOT NULL,
+     IFOTO         IMAGE NULL,
+	 
+     CONSTRAINT PKUSUARIOS PRIMARY KEY (IDUSUARIO)
+  );
 
-CREATE TABLE tab001(
-	nChave int IDENTITY(1,1) primary key NOT NULL,
-	tNomeCompleto varchar(100) NOT NULL,
-	lAtivo bit NOT NULL,
-	dDataCadastro date NOT NULL,
-	tLogin varchar(50) NOT NULL,
-	tSenha varchar(100) NOT NULL,
-	iFoto image NULL
-); 
-
-EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'Usuarios' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'tab001'
-GO
+EXEC SYS.SP_ADDEXTENDEDPROPERTY
+  @NAME=N'MS_DESCRIPTION',
+  @VALUE=N'USUARIOS',
+  @LEVEL0TYPE=N'SCHEMA',
+  @LEVEL0NAME=N'DBO',
+  @LEVEL1TYPE=N'TABLE',
+  @LEVEL1NAME=N'TAB001'
