@@ -17,15 +17,15 @@ TStatusTabela = record
 		novo: boolean;
 	end;
   TfrmcadPadrao = class(TForm)
-    pnl1: TPanel;
     pgcCadastro: TPageControl;
     tsCadastro: TTabSheet;
     tsConsulta: TTabSheet;
     grdConsulta: TDBGrid;
     qryPrincipal: TFDQuery;
+    dsPrincipal: TDataSource;
+    pnl1: TPanel;
     btnNovo: TBitBtn;
     dbnvgr1: TDBNavigator;
-    dsPrincipal: TDataSource;
     btnBuscar: TBitBtn;
     btnAlterar: TBitBtn;
     btnExcluir: TBitBtn;
@@ -50,13 +50,16 @@ TStatusTabela = record
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure btnBuscarClick(Sender: TObject);
+    procedure pgcCadastroChange(Sender: TObject);
+    procedure qryPrincipalAfterOpen(DataSet: TDataSet);
   private
     { Private declarations }
     procedure AtualizaControles();
   public
     { Public declarations }
     function StatusTabela() :TStatusTabela;
-    procedure ValidaCampo(campo:TDBEdit);
+    procedure ValidaCampo(campo:TDBEdit); overload;
+    procedure ValidaCampo(campo:TEdit); overload;
   end;
 
 var
@@ -155,6 +158,11 @@ begin
   qryPrincipal.Open;
 end;
 
+procedure TfrmcadPadrao.pgcCadastroChange(Sender: TObject);
+begin
+  qryPrincipal.Cancel;
+end;
+
 procedure TfrmcadPadrao.qryPrincipalAfterCancel(DataSet: TDataSet);
 begin
   AtualizaControles;
@@ -171,6 +179,11 @@ begin
 end;
 
 procedure TfrmcadPadrao.qryPrincipalAfterInsert(DataSet: TDataSet);
+begin
+  AtualizaControles;
+end;
+
+procedure TfrmcadPadrao.qryPrincipalAfterOpen(DataSet: TDataSet);
 begin
   AtualizaControles;
 end;
@@ -201,6 +214,16 @@ end;
 function TfrmcadPadrao.StatusTabela: TStatusTabela;
 Begin
 	ObterStatusTabela(qryPrincipal, result.TemAlgum, result.Editando, result.Novo);
+end;
+
+procedure TfrmcadPadrao.ValidaCampo(campo: TEdit);
+begin
+  if trim(campo.Text) = string.Empty then
+  begin
+    MessageDlg('O campo deve ser preenchido.',mtInformation,[mbOK],0);
+    campo.SetFocus;
+    Abort;
+  end;
 end;
 
 procedure TfrmcadPadrao.ValidaCampo(campo:TDBEdit);

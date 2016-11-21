@@ -1,0 +1,175 @@
+unit ufrmProdutos;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, ufrmCadPadrao, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  Vcl.DBCtrls, Vcl.StdCtrls, Vcl.Mask, Data.DB, FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids, Vcl.Buttons, Vcl.ExtCtrls,
+  Vcl.ComCtrls;
+
+type
+  TfrmProdutos = class(TfrmcadPadrao)
+    qryPrincipalIDPRODUTO: TFDAutoIncField;
+    fldPrincipalTCODIGOBARRAS: TStringField;
+    fldPrincipalTDESCRICAO: TStringField;
+    qryPrincipalNGRUPO: TIntegerField;
+    qryPrincipalNFABRICANTE: TIntegerField;
+    qryPrincipalNFORNECEDOR: TIntegerField;
+    qryPrincipalLATIVO: TBooleanField;
+    qryPrincipalLMOVIMENTAESTOQUE: TIntegerField;
+    qryPrincipalFESTOQUE: TFloatField;
+    qryPrincipalNUNIDADE: TIntegerField;
+    qryPrincipalFESTOQUEMIN: TFloatField;
+    qryPrincipalFESTOQUEMAX: TFloatField;
+    qryPrincipalDATACADASTRO: TDateField;
+    qryPrincipalNUSUARIO: TIntegerField;
+    qryPrincipalFPRECO: TFloatField;
+    lblNomeCompleto: TLabel;
+    edtTDescricao: TDBEdit;
+    lblCodBarras: TLabel;
+    edtCodigoBarras: TDBEdit;
+    cbbGrupo: TDBLookupComboBox;
+    lblGrupo: TLabel;
+    qryGrupo: TFDQuery;
+    dsGrupo: TDataSource;
+    qryGrupoIDGRUPO: TFDAutoIncField;
+    fldGrupoTDESCRICAO: TStringField;
+    cbbFabricante: TDBLookupComboBox;
+    lblFabricante: TLabel;
+    qryFabricante: TFDQuery;
+    dsFabricante: TDataSource;
+    qryFabricanteIDFABRICANTE: TFDAutoIncField;
+    fldFabricanteTDESCRICAO: TStringField;
+    cbbFornecedor: TDBLookupComboBox;
+    lbl1: TLabel;
+    qryFornecedor: TFDQuery;
+    dsFornecedor: TDataSource;
+    qryFornecedorIDFORNECEDOR: TFDAutoIncField;
+    fldFornecedorTDESCRICAO: TStringField;
+    grpEstoque: TGroupBox;
+    chkLMOVIMENTAESTOQUE: TDBCheckBox;
+    chkLATIVO: TDBCheckBox;
+    mskdEstoque: TMaskEdit;
+    mskdEstoqueMin: TMaskEdit;
+    mskdEstoqueMax: TMaskEdit;
+    cbbUnidade: TDBLookupComboBox;
+    lblAtual: TLabel;
+    lbl2: TLabel;
+    lbl3: TLabel;
+    lbl4: TLabel;
+    qryUnidade: TFDQuery;
+    dsUnidade: TDataSource;
+    qryUnidadeIDUNIDADE: TFDAutoIncField;
+    fldUnidadeTSIGLA: TStringField;
+    lblUsuario: TLabel;
+    mskdPreco: TMaskEdit;
+    lblPreco: TLabel;
+    procedure qryPrincipalAfterCancel(DataSet: TDataSet);
+    procedure qryPrincipalAfterDelete(DataSet: TDataSet);
+    procedure qryPrincipalAfterEdit(DataSet: TDataSet);
+    procedure qryPrincipalAfterInsert(DataSet: TDataSet);
+    procedure qryPrincipalAfterPost(DataSet: TDataSet);
+    procedure qryPrincipalAfterRefresh(DataSet: TDataSet);
+    procedure qryPrincipalAfterScroll(DataSet: TDataSet);
+    procedure qryPrincipalBeforePost(DataSet: TDataSet);
+  private
+    { Private declarations }
+    procedure AtulizaCampos();
+    idUsuarioLogado: Integer;
+  public
+    { Public declarations }
+    constructor Create(aowner: tcomponent; idUsuarioLogado); reintroduce;
+  end;
+
+var
+  frmProdutos: TfrmProdutos;
+
+implementation
+
+uses
+  uModuloDados;
+
+{$R *.dfm}
+
+{ TfrmProdutos }
+
+procedure TfrmProdutos.AtulizaCampos;
+begin
+  mskdEstoque.ReadOnly := not StatusTabela.editando;
+  mskdEstoqueMin.ReadOnly := not StatusTabela.editando;
+  mskdEstoqueMax.ReadOnly := not StatusTabela.editando;
+  mskdPreco.ReadOnly := not StatusTabela.editando;
+end;
+
+constructor TfrmProdutos.Create(aowner: tcomponent; idUsuario);
+begin
+  inherited Create(aowner);
+  idUsuarioLogado := idUsuarioLogado;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterCancel(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterDelete(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterEdit(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterInsert(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterPost(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterRefresh(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+end;
+
+procedure TfrmProdutos.qryPrincipalAfterScroll(DataSet: TDataSet);
+begin
+  inherited;
+  AtulizaCampos;
+  mskdEstoque.Text := qryPrincipal.FieldByName('FESTOQUE').AsString;
+  mskdEstoqueMin.Text := qryPrincipal.FieldByName('FESTOQUEMIN').AsString;
+  mskdEstoqueMax.Text := qryPrincipal.FieldByName('FESTOQUEMAX').AsString;
+  mskdPreco.Text := qryPrincipal.FieldByName('FPRECO').AsString;
+  //login
+end;
+
+procedure TfrmProdutos.qryPrincipalBeforePost(DataSet: TDataSet);
+begin
+  inherited;
+  ValidaCampo(edtTDescricao);
+  ValidaCampo(TEdit(mskdEstoque));
+  ValidaCampo(TEdit(mskdPreco));
+  qryPrincipal.FieldByName('FESTOQUE').AsString :=  mskdEstoque.Text;
+  qryPrincipal.FieldByName('FESTOQUEMIN').AsString := mskdEstoqueMin.Text;
+  qryPrincipal.FieldByName('FESTOQUEMAX').AsString := mskdEstoqueMax.Text;
+  qryPrincipal.FieldByName('FPRECO').AsString := mskdPreco.Text;
+  qryPrincipal.FieldByName('DATACADASTRO').AsDateTime := Data;
+  //login
+end;
+
+end.

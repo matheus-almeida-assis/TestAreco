@@ -1,0 +1,121 @@
+inherited frmFornecedores: TfrmFornecedores
+  Caption = 'Cadastro de Fornecedores'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcCadastro: TPageControl
+    ExplicitWidth = 575
+    inherited tsCadastro: TTabSheet
+      ExplicitWidth = 567
+      inherited pnl1: TPanel
+        ExplicitLeft = 474
+        ExplicitHeight = 331
+        inherited dbnvgr1: TDBNavigator
+          Hints.Strings = ()
+        end
+      end
+      object edt1: TDBEdit
+        Left = 64
+        Top = 104
+        Width = 121
+        Height = 21
+        TabOrder = 1
+      end
+    end
+    inherited tsConsulta: TTabSheet
+      ExplicitWidth = 567
+    end
+  end
+  inherited qryPrincipal: TFDQuery
+    SQL.Strings = (
+      'SELECT IDFORNECEDOR,'
+      '       TDESCRICAO,'
+      '       TLOGRADOURO,'
+      '       NESTADO, '
+      '       TCNPJ, '
+      '       TIE,'
+      '       TTELEFONE,'
+      '       TFAX,'
+      '       TCEP,'
+      '       TCIDADE,'
+      '       TCONTATO,'
+      '       TEMAIL'
+      '  FROM testeAreco.dbo.TAB004')
+    object qryPrincipalIDFORNECEDOR: TFDAutoIncField
+      DisplayLabel = 'Chave'
+      FieldName = 'IDFORNECEDOR'
+      Origin = 'IDFORNECEDOR'
+      ProviderFlags = [pfInWhere, pfInKey]
+      ReadOnly = True
+    end
+    object fldPrincipalTDESCRICAO: TStringField
+      DisplayLabel = 'Descri'#231#227'o'
+      FieldName = 'TDESCRICAO'
+      Origin = 'TDESCRICAO'
+      Required = True
+      Size = 100
+    end
+    object fldPrincipalTLOGRADOURO: TStringField
+      DisplayLabel = 'Logradouro'
+      FieldName = 'TLOGRADOURO'
+      Origin = 'TLOGRADOURO'
+      Required = True
+      Size = 200
+    end
+    object qryPrincipalNESTADO: TIntegerField
+      DisplayLabel = 'ChEstado'
+      FieldName = 'NESTADO'
+      Origin = 'NESTADO'
+      Required = True
+    end
+    object fldPrincipalTCNPJ: TStringField
+      DisplayLabel = 'CNPJ'
+      FieldName = 'TCNPJ'
+      Origin = 'TCNPJ'
+      Required = True
+    end
+    object fldPrincipalTIE: TStringField
+      DisplayLabel = 'IE'
+      FieldName = 'TIE'
+      Origin = 'TIE'
+      Required = True
+    end
+    object fldPrincipalTTELEFONE: TStringField
+      DisplayLabel = 'Telefone'
+      FieldName = 'TTELEFONE'
+      Origin = 'TTELEFONE'
+      Required = True
+    end
+    object fldPrincipalTFAX: TStringField
+      DisplayLabel = 'Fax'
+      FieldName = 'TFAX'
+      Origin = 'TFAX'
+    end
+    object fldPrincipalTCEP: TStringField
+      DisplayLabel = 'Cep'
+      FieldName = 'TCEP'
+      Origin = 'TCEP'
+      Required = True
+      Size = 10
+    end
+    object fldPrincipalTCIDADE: TStringField
+      DisplayLabel = 'Cidade'
+      FieldName = 'TCIDADE'
+      Origin = 'TCIDADE'
+      Required = True
+      Size = 50
+    end
+    object fldPrincipalTCONTATO: TStringField
+      DisplayLabel = 'Contato'
+      FieldName = 'TCONTATO'
+      Origin = 'TCONTATO'
+      Required = True
+      Size = 100
+    end
+    object fldPrincipalTEMAIL: TStringField
+      DisplayLabel = 'E-mail'
+      FieldName = 'TEMAIL'
+      Origin = 'TEMAIL'
+      Size = 200
+    end
+  end
+end

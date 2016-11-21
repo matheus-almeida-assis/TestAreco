@@ -1,0 +1,96 @@
+unit ufrmBuscar;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons, Vcl.Mask, Vcl.Samples.Spin,
+  Vcl.ComCtrls;
+
+type
+  TfrmBuscar = class(TForm)
+    pnl1: TPanel;
+    pnl2: TPanel;
+    edtCampoTexto: TEdit;
+    cbbCampos: TComboBox;
+    grdPesquisa: TDBGrid;
+    dsPesquisa: TDataSource;
+    qryPesquisa: TFDQuery;
+    btnBuscar: TBitBtn;
+    procedure btnBuscarClick(Sender: TObject);
+    procedure grdPesquisaDblClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    constructor Create(aowner: tcomponent; var qryBusca: TFDQuery); reintroduce;
+  end;
+
+var
+  frmBuscar: TfrmBuscar;
+  qryBuscar: TFDQuery;
+
+implementation
+
+uses
+  ufrmLogin, uModuloDados;
+
+{$R *.dfm}
+
+{ TfrmBuscar }
+procedure TfrmBuscar.btnBuscarClick(Sender: TObject);
+var
+  campo :string;
+  I :Integer;
+begin
+  if cbbCampos.Text = 'Selecionar...' then
+  begin
+    MessageDlg('Selecione um campo para Buscar?',mtInformation,[mbOK],0);
+    cbbCampos.SetFocus;
+  end
+  else
+  begin
+    for I :=0 to qryBuscar.FieldCount-1 do
+    begin
+      if qryBuscar.Fields[I].DisplayName = cbbCampos.Text  then
+      begin
+        campo := qryBuscar.Fields[I].FieldName;
+        Break;
+      end;
+    end;
+    qryPesquisa.SQL.Clear;
+    qryPesquisa.SQL := qryBuscar.SQL;
+    qryPesquisa.SQL.Add('where ' + campo + ' like ''%' + edtCampoTexto.Text+'%''');
+    qryPesquisa.Open();
+    grdPesquisa.Columns[0].Visible := False;
+  end;
+end;
+
+constructor TfrmBuscar.Create(aowner: tcomponent; var qryBusca: TFDQuery);
+var
+  I :Integer;
+begin
+  inherited Create(aowner);
+  for I :=0 to qryBusca.FieldCount-1 do
+  begin
+    if qryBusca.Fields[I].DataType = ftString then
+    begin
+      cbbCampos.Items.Add(qryBusca.Fields[I].DisplayName);
+    end;
+  end;
+  qryBuscar := qryBusca;
+  qryPesquisa.Close;
+  qryPesquisa.SQL := qryBusca.SQL;
+end;
+
+procedure TfrmBuscar.grdPesquisaDblClick(Sender: TObject);
+begin
+  qryBuscar.Locate(qryPesquisa.Fields[0].Name,qryPesquisa.Fields[0].AsInteger);
+  Self.Close;
+end;
+
+end.

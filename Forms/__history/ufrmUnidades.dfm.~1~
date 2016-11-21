@@ -1,0 +1,19 @@
+inherited frmcadPadrao1: TfrmcadPadrao1
+  Caption = 'frmcadPadrao1'
+  PixelsPerInch = 96
+  TextHeight = 13
+  inherited pgcCadastro: TPageControl
+    inherited tsCadastro: TTabSheet
+      inherited pnl1: TPanel
+        inherited dbnvgr1: TDBNavigator
+          Hints.Strings = ()
+        end
+      end
+    end
+    inherited tsConsulta: TTabSheet
+      ExplicitLeft = 0
+      ExplicitTop = 0
+      ExplicitHeight = 0
+    end
+  end
+end

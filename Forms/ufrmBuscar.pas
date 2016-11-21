@@ -89,7 +89,7 @@ end;
 
 procedure TfrmBuscar.grdPesquisaDblClick(Sender: TObject);
 begin
-  qryBuscar.Locate(qryPesquisa.Fields[0].Name,qryPesquisa.Fields[0].AsInteger);
+  qryBuscar.Locate(qryPesquisa.Fields[0].FieldName,qryPesquisa.Fields[0].AsInteger);
   Self.Close;
 end;
 

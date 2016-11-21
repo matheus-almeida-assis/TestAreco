@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Menus, ufrmEstados, ufrmUnidades;
 
 type
   TfrmMenu = class(TForm)
@@ -26,8 +26,17 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Usuarios1Click(Sender: TObject);
+    procedure Estados1Click(Sender: TObject);
+    procedure Unidades1Click(Sender: TObject);
+    procedure Finalizar1Click(Sender: TObject);
+    procedure rocardeUsuario1Click(Sender: TObject);
+    procedure Grupos1Click(Sender: TObject);
+    procedure Fornecedores2Click(Sender: TObject);
+    procedure Fabricantes1Click(Sender: TObject);
+    procedure Produtos1Click(Sender: TObject);
   private
     { Private declarations }
+    idUsuarioLogado :Integer;
   public
     { Public declarations }
   end;
@@ -38,9 +47,38 @@ var
 implementation
 
 uses
-  ufrmLogin, ufrmUsuarios;
+  ufrmLogin, ufrmUsuarios, ufrmGrupos, ufrmFornecedores, ufrmFabricantes, ufrmProdutos;
 
 {$R *.dfm}
+
+procedure TfrmMenu.Estados1Click(Sender: TObject);
+var
+  frmEstados :TfrmEstados;
+begin
+  frmEstados := TfrmEstados.Create(Self);
+  try
+    frmEstados.ShowModal;
+  finally
+    frmEstados.Free;
+  end;
+end;
+
+procedure TfrmMenu.Fabricantes1Click(Sender: TObject);
+var
+  frmFabricantes :TfrmFabricantes;
+begin
+  frmFabricantes := TfrmFabricantes.Create(Self);
+  try
+    frmFabricantes.ShowModal;
+  finally
+    frmFabricantes.Free;
+  end;
+end;
+
+procedure TfrmMenu.Finalizar1Click(Sender: TObject);
+begin
+  Application.Terminate;
+end;
 
 procedure TfrmMenu.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
@@ -54,11 +92,75 @@ begin
   frmLogin := TfrmLogin.Create(Self);
   try
     frmLogin.ShowModal;
+    idUsuarioLogado:= frmLogin.UsuarioLogado();
   finally
     frmLogin.Free;
   end;
 
 end;
+
+procedure TfrmMenu.Fornecedores2Click(Sender: TObject);
+var
+  frmFornecedores :TfrmFornecedores;
+begin
+  frmFornecedores := TfrmFornecedores.Create(Self);
+  try
+    frmFornecedores.ShowModal;
+  finally
+    frmFornecedores.Free;
+  end;
+end;
+
+procedure TfrmMenu.Grupos1Click(Sender: TObject);
+var
+  frmGrupos :TfrmGrupo;
+begin
+  frmGrupos :=TfrmGrupo.Create(Self);
+  try
+    frmGrupos.ShowModal;
+  finally
+    frmGrupos.Free;
+  end;
+end;
+
+procedure TfrmMenu.Produtos1Click(Sender: TObject);
+var
+  frmProdutos :TfrmProdutos;
+begin
+  frmProdutos := TfrmProdutos.Create(self,idUsuarioLogado);
+  try
+    frmProdutos.ShowModal;
+  finally
+    frmProdutos.Free;
+  end;
+end;
+
+procedure TfrmMenu.rocardeUsuario1Click(Sender: TObject);
+var
+  frmLogin:TfrmLogin;
+begin
+  frmLogin := TfrmLogin.Create(Self);
+  try
+    frmLogin.ShowModal;
+    idUsuarioLogado:= frmLogin.UsuarioLogado();
+  finally
+    frmLogin.Free;
+  end;
+
+end;
+
+procedure TfrmMenu.Unidades1Click(Sender: TObject);
+var
+  frmUnidades : TfrmUnidades;
+begin
+  frmUnidades := TfrmUnidades.Create(Self);
+  try
+    frmUnidades.ShowModal;
+  finally
+    frmUnidades.Free;
+  end;
+end;
+
 procedure TfrmMenu.Usuarios1Click(Sender: TObject);
 var
   frmUsuarios :TfrmUsuarios;

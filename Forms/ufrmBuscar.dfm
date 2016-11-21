@@ -22,7 +22,6 @@ object frmBuscar: TfrmBuscar
     Height = 49
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 692
     object edtCampoTexto: TEdit
       Left = 16
       Top = 11
@@ -64,9 +63,6 @@ object frmBuscar: TfrmBuscar
     Height = 295
     Align = alClient
     TabOrder = 1
-    ExplicitTop = 56
-    ExplicitWidth = 682
-    ExplicitHeight = 176
     object grdPesquisa: TDBGrid
       Left = 1
       Top = 1

@@ -37,24 +37,23 @@ type
     entrou: Boolean;
   public
     { Public declarations }
+    function UsuarioLogado():Integer;
   end;
 
 implementation
 
 uses
-  ufrmMenu, uFuncs, uModuloDados;
+  uFuncs, uModuloDados;
 
 {$R *.dfm}
 
 procedure TfrmLogin.btnEntrarClick(Sender: TObject);
-var
-  frmMenu :TfrmMenu;
 begin
   if edtSenha.Text <> string.Empty then
   begin
     if edtSenha.Text = qryLogin.FieldByName('TSENHA').AsString then
     begin
-      entrou :=True;
+      entrou := True;
       Self.Close;
     end
     else
@@ -109,6 +108,18 @@ end;
 procedure TfrmLogin.FormCreate(Sender: TObject);
 begin
   entrou := False;
+end;
+
+function TfrmLogin.UsuarioLogado: Integer;
+begin
+  if entrou then
+  begin
+    Result:= qryLogin.FieldByName('IDUSUARIO').AsInteger;
+  end
+  else
+  begin
+    Result := 0;
+  end;
 end;
 
 end.
