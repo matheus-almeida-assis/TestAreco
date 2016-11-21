@@ -1,0 +1,25 @@
+unit uFuncs;
+
+interface
+
+uses
+  Data.DB, Vcl.Graphics, System.Classes, Vcl.ExtCtrls,Vcl.Forms,SysUtils,FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+procedure ObterStatusTabela(Tabela: tdataset; Var TemRegistro, Editando, Novo :Boolean);
+procedure CarregaImageQry(Qry :TDataSet; campo :TField; var image :TImage);
+procedure SalvarImageCampo(var qry :TFDQuery; campo:TField; var imagem:TImage; tabela:string);
+
+
+implementation
+
+procedure ObterStatusTabela(Tabela: tdataset; Var TemRegistro, Editando, Novo:Boolean);
+begin
+  Novo := Tabela.State = dsInsert;
+  Editando := Tabela.State in [dsEdit,dsInsert];
+  TemRegistro := Tabela.RecordCount > 0;
+end;
+
+end.

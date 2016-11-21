@@ -1,0 +1,16 @@
+program TestAreco;
+
+uses
+  Vcl.Forms,
+  ufrmMenu in 'Forms\ufrmMenu.pas' {frmMenu},
+  ufrmCadPadrao in 'Forms\ufrmCadPadrao.pas' {frmcadPadrao},
+  ufrmLogin in 'Forms\ufrmLogin.pas' {frmLogin};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TfrmMenu, frmMenu);
+  Application.Run;
+end.

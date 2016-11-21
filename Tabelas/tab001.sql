@@ -6,7 +6,6 @@
      DDATACADASTRO DATE NOT NULL,
      TLOGIN        VARCHAR(50) NOT NULL,
      TSENHA        VARCHAR(100) NOT NULL,
-     IFOTO         IMAGE NULL,
 	 
      CONSTRAINT PKUSUARIOS PRIMARY KEY (IDUSUARIO)
   );
@@ -17,4 +16,21 @@ EXEC SYS.SP_ADDEXTENDEDPROPERTY
   @LEVEL0TYPE=N'SCHEMA',
   @LEVEL0NAME=N'DBO',
   @LEVEL1TYPE=N'TABLE',
-  @LEVEL1NAME=N'TAB001'
+  @LEVEL1NAME=N'TAB001';
+  
+ INSERT INTO TAB001
+            (TNOMECOMPLETO,
+             LATIVO,
+             DDATACADASTRO,
+             TLOGIN,
+             TSENHA,
+             IFOTO)
+SELECT 'Administrador',
+       1,
+       '11/20/2016',
+       'admin',
+       'admin',
+       BULKCOLUMN
+FROM   OPENROWSET (BULK 'D:\Documentos\TestAreco\Bin\Graficos\Tab001\admin.bmp',
+       SINGLE_BLOB) AS IMAGE;  
+    

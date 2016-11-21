@@ -1,0 +1,60 @@
+unit uFuncs;
+
+interface
+
+uses
+  Data.DB, Vcl.Graphics, System.Classes, Vcl.ExtCtrls,Vcl.Forms,SysUtils,FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+procedure ObterStatusTabela(Tabela: tdataset; Var TemRegistro, Editando, Novo :Boolean);
+procedure CarregaImageQry(Qry :TDataSet; campo :TField; var image :TImage);
+procedure SalvarImageCampo(qry :TFDQuery; campo:TField; var imagem:TPicture; tabela:string);
+
+
+implementation
+
+procedure ObterStatusTabela(Tabela: tdataset; Var TemRegistro, Editando, Novo:Boolean);
+begin
+  Novo := Tabela.State = dsInsert;
+  Editando := Tabela.State in [dsEdit,dsInsert];
+  TemRegistro := Tabela.RecordCount > 0;
+end;
+
+procedure CarregaImageQry(Qry :TDataSet; campo :TField; var image :TImage);
+var
+  streamImage :TStream;
+  bitmapImage :TBitmap;
+begin
+  streamImage := Qry.CreateBlobStream(campo,bmRead);
+  bitmapImage:= TBitmap.Create;
+  try
+    bitmapImage.LoadFromStream(streamImage);
+    image.Picture.Assign(bitmapImage);
+  finally
+    bitmapImage.Free;
+  end;
+end;
+
+procedure SalvarImageCampo(qry :TFDQuery; campo:TField; var imagem:TImage; tabela:string);
+var
+  fileStreamImage :TFileStream;
+  caminhoSalvar :string;
+  qrySalvar: TFDQuery;
+begin
+  caminhoSalvar :=  ExtractFilePath(application.ExeName) + '/'+ tabela+ '/'+qry.Fields[0].AsString+'.bmp';
+  imagem.Picture.SaveToFile(caminhoSalvar);
+  fileStreamImage.Create(caminhoSalvar, fmOpenRead or fmShareDenyWrite);
+  qrySalvar := qry;
+  qrySalvar.Close;
+  qrySalvar.SQL.Clear;
+  qrySalvar.SQL.Add('Update ' + tabela + ' set ' + campo.FieldName + '= :FOTOCARREGADA where ' + qry.Fields[0].FieldName +' = ' +qry.Fields[0].AsString);
+  qrySalvar.Params[0].DataType := ftBlob;
+  qrySalvar.ParamByName('FOTOCARREGADA').AsStream := fileStreamImage;
+  qrySalvar.ExecSQL;
+  qrySalvar.Close;
+  qrySalvar.Free;
+end;
+
+end.
